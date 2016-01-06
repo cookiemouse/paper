@@ -281,6 +281,8 @@ public class PaperView extends FrameLayout implements View.OnTouchListener {
                     float move = (float) Math.abs(distance) / SCROLL_MAX_DISTANCE * (float) translateDistance;
                     reboundHori.setTranslationY(-move);
 
+                    reboundHori.invalidate();
+
                     popAnimation.setCurrentValue(scaleValue - 1);
 
                     status.preMode = Status.STATUS_CHANGE_BIGGER;
@@ -296,6 +298,8 @@ public class PaperView extends FrameLayout implements View.OnTouchListener {
                     float scaleValue = 1 - distance / SCROLL_MAX_DISTANCE;
                     reboundHori.setScaleX(scaleValue);
                     reboundHori.setScaleY(scaleValue);
+
+                    reboundHori.invalidate();
 
                     popAnimation.setCurrentValue(scaleValue);
 

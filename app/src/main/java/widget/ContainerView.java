@@ -39,8 +39,6 @@ public class ContainerView extends FrameLayout {
     public static final int PREVIEW = 0;
     public static final int AFTERVIEW = 1;
 
-    private ReboundHorizontalScrollView real;
-
     private Context context;
 
     private AttributeSet attributeSet;
@@ -69,11 +67,18 @@ public class ContainerView extends FrameLayout {
         return super.onTouchEvent(event);
     }
 
+    @Override
+    public void invalidate() {
+        Rebound scroll = (Rebound) getChildAt(0);
+        scroll.invalidate();
+        super.invalidate();
+    }
+
     /**
      * Init view
      */
     private void initChild() {
-        ReboundHorizontalScrollView scrollView = new ReboundHorizontalScrollView(context, attributeSet);
+        Rebound scrollView = new Rebound(context, attributeSet);
         LinearLayout linearLayout = new LinearLayout(context, attributeSet);
 
         LayoutParams linearParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -84,15 +89,13 @@ public class ContainerView extends FrameLayout {
         scrollView.setHorizontalScrollBarEnabled(false);
 
         addView(scrollView, scrollParams);
-
-        real = (ReboundHorizontalScrollView) getChildAt(0);
     }
 
     /**
      * Add a new {@link ReboundHorizontalScrollView}
      */
     public void addRebound(int status) {
-        ReboundHorizontalScrollView scrollView = new ReboundHorizontalScrollView(context, attributeSet);
+        Rebound scrollView = new Rebound(context, attributeSet);
         LinearLayout linearLayout = new LinearLayout(context, attributeSet);
 
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -115,6 +118,7 @@ public class ContainerView extends FrameLayout {
 
     /**
      * Do translate animation
+     *
      * @param direction which direction that should animate to
      */
     private void translate(int direction) {
